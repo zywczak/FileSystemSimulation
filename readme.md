@@ -23,8 +23,8 @@ The project implements the following design patterns:
 
 ## Example Usage
 
-![SSC1](https://github.com/zywczak/FileSystemSimulator/blob/main/console1.png)
+![SSC1](https://github.com/zywczak/FileSystemSimulation/blob/main/console1.png)
 
-![SSC2](https://github.com/zywczak/FileSystemSimulator/blob/main/console2.png)
+![SSC2](https://github.com/zywczak/FileSystemSimulation/blob/main/console2.png)
 
-![SSC3](https://github.com/zywczak/FileSystemSimulator/blob/main/console3.png)
+![SSC3](https://github.com/zywczak/FileSystemSimulation/blob/main/console3.png)
