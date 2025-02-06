@@ -1,19 +1,21 @@
-from operation import operation
+from commands.operation import operation
+from commands.Cd import Cd
+import copy
 
-class More(operation):
+class Cp(operation):
     def get_operation(self):
-        return "ls"
-    
+        return "cp"
+
     def check_and_execute(self, current_directory, *args):
-        if len(args) != 1:
-           print("Invalid number of arguments!")
+        if len(args) != 2:
+            print("Invalid number of arguments")
         else:
             directory = current_directory
             current_directory = self.execute(current_directory, *args)
             if current_directory == None:
                 current_directory = directory
         return current_directory
-    
+
     def execute(self, current_directory, *args):
         directory = current_directory
         directories = args[0].split("/")
@@ -32,7 +34,7 @@ class More(operation):
                     current_directory = current_directory.get_parent()
                 else:
                     print('folder not found')
-                    return
+                    return  
             else:
                 children = current_directory.get_children()
                 for child in children:
@@ -46,17 +48,30 @@ class More(operation):
                         print(f'{directories[j]} directory not found')
                         return
                     
-        j = len(directories)  
         children = current_directory.get_children()
         for child in children:
-            if directories[-1] == child.get_name() and child.get_type() == "file":
-                print(child.get_content())
+            if directories[- 1] == child.get_name():
+                to_copy = copy.deepcopy(child)
                 break
-            elif directories[-1] == child.get_name() and child.get_type() != "file":
-                print(f'{directories[j - 1]} is not file')
+            elif child == directories[-1]:
+                print(f'{directories[j - 1]} not found')
                 return
-            else:
-                print(f'{directories[j - 1]} file not found')
-                return
+            
+        current_directory = directory
+        current_directory = Cd().execute(current_directory, args[1])
         
-        return directory
+        if current_directory != None:
+            i = False
+            for child in current_directory.get_children():
+                if child.get_name() == to_copy.get_name():
+                    i = True
+                    print('this is in directory')
+                    break
+            if i == False:
+                to_copy.set_parent(current_directory)
+                current_directory.add_children(to_copy)
+        else:
+            print('directory not found')
+        
+        current_directory = directory
+        return current_directory

@@ -1,5 +1,5 @@
-from operation import operation
-from Cd import Cd
+from commands.operation import operation
+from commands.Cd import Cd
 
 class Ls(operation):
     def get_operation(self):

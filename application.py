@@ -1,6 +1,6 @@
 from fileSystem.File import File
 from fileSystem.Directory import Directory
-from Cmd import Cmd
+from commands.Cmd import Cmd
 
 class Application():
     def __init__(self):

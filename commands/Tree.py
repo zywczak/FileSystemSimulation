@@ -1,5 +1,5 @@
-from operation import operation
-from Cd import Cd
+from commands.operation import operation
+from commands.Cd import Cd
 
 class Tree(operation):
     def __init__(self):

@@ -1,11 +1,11 @@
-from operation import operation
-from Cd import Cd
-from Cp import Cp
-from Ls import Ls
-from Mkdir import Mkdir
-from Mv import Mv
-from Tree import Tree
-from More import More
+from commands.operation import operation
+from commands.Cd import Cd
+from commands.Cp import Cp
+from commands.Ls import Ls
+from commands.Mkdir import Mkdir
+from commands.Mv import Mv
+from commands.Tree import Tree
+from commands.More import More
 
 class Cmd():
     def __init__(self):

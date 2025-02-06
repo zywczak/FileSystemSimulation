@@ -1,13 +1,13 @@
-from operation import operation
-from Cd import Cd
-import copy
+from fileSystem.Directory import Directory
+from commands.operation import operation
+import re
 
-class Cp(operation):
+class Mkdir(operation):
     def get_operation(self):
-        return "cp"
-
+        return "mkdir"
+    
     def check_and_execute(self, current_directory, *args):
-        if len(args) != 2:
+        if len(args) != 1:
             print("Invalid number of arguments")
         else:
             directory = current_directory
@@ -15,11 +15,12 @@ class Cp(operation):
             if current_directory == None:
                 current_directory = directory
         return current_directory
-
+    
     def execute(self, current_directory, *args):
         directory = current_directory
+        special_characters = r'[_.$/\\~]'
         directories = args[0].split("/")
-        for j in range(len(directories) - 1):
+        for j in range(len(directories)):
             if j == 0 and directories[0] == ".":
                 continue
             if j == 0 and directories[0] == "~":
@@ -45,33 +46,13 @@ class Cp(operation):
                         print(f'{directories[j]} is file')
                         return
                     else:
-                        print(f'{directories[j]} directory not found')
+                        for i in range(j, len(directories)):
+                            if not re.search(special_characters, directories[i]):                    
+                                kat = Directory(directories[i], current_directory.get_name())
+                                current_directory.add_children(kat)
+                                current_directory = kat
+                            else:
+                                print("cannot create a directory containing special characters")
                         return
-                    
-        children = current_directory.get_children()
-        for child in children:
-            if directories[- 1] == child.get_name():
-                to_copy = copy.deepcopy(child)
-                break
-            elif child == directories[-1]:
-                print(f'{directories[j - 1]} not found')
-                return
-            
-        current_directory = directory
-        current_directory = Cd().execute(current_directory, args[1])
-        
-        if current_directory != None:
-            i = False
-            for child in current_directory.get_children():
-                if child.get_name() == to_copy.get_name():
-                    i = True
-                    print('this is in directory')
-                    break
-            if i == False:
-                to_copy.set_parent(current_directory)
-                current_directory.add_children(to_copy)
-        else:
-            print('directory not found')
-        
-        current_directory = directory
-        return current_directory
+
+        return directory

@@ -1,4 +1,4 @@
-from operation import operation
+from commands.operation import operation
 
 class Cd(operation):
     def get_operation(self):
